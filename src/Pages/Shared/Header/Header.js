@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../../assest/logo.png';
 
 const Header = () => {
     const navItems = <>
@@ -20,13 +21,16 @@ const Header = () => {
                         }
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost normal-case text-xl">MobileFair.Com</Link>
+                <div className='flex'>
+                    <img className='w-14' src={logo} alt="" />
+                    <Link to='/' className="btn btn-ghost normal-case text-xl">MobileFair.Com</Link>
+                </div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                   {
-                    navItems
-                   }
+                    {
+                        navItems
+                    }
                 </ul>
             </div>
             <div className="navbar-end">
