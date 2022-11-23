@@ -1,0 +1,14 @@
+.contact-bg{
+    background-image: url(../../../assest/Shopping-cart--1024x576_1295x365.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+    .contact-bg{
+        background-image: none;
+    }
+}

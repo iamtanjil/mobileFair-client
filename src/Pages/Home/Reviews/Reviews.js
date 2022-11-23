@@ -2,6 +2,8 @@ import React from 'react';
 import user1 from '../../../assest/user/user1.jpg';
 import user2 from '../../../assest/user/user2.jpg';
 import user3 from '../../../assest/user/user3.jpg';
+import quote from '../../../assest/quote.png';
+import Review from './Review';
 
 const Reviews = () => {
     const reviews = [
@@ -28,9 +30,26 @@ const Reviews = () => {
         },
     ];
     return (
-        <div>
-            
-        </div>
+        <section className='my-16'>
+            <div className='flex justify-between'>
+                <div>
+                    <h4 className="text-xl text-orange-600 font-bold">Reviews</h4>
+                    <h2 className="text-4xl">What Our Buyers Says</h2>
+                </div>
+                <figure>
+                    <img className='w-24 lg:w-48' src={quote} alt="" />
+                </figure>
+            </div>
+            <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                {
+                    reviews.map(review =><Review
+                        key={review._id}
+                        review={review}
+                    >
+                    </Review>)
+                }
+            </div>
+        </section>
     );
 };
 

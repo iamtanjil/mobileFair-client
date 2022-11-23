@@ -4,7 +4,7 @@ import logo from '../../../assest/logo.png'
 
 const Footer = () => {
     return (
-        <footer className="footer footer-center p-10 bg-orange-700 text-primary-content">
+        <footer className="footer footer-center p-10 bg-orange-700 text-primary-content rounded-t-md">
             <div>
                 <img className='w-20' src={logo} alt="" />
                 <p className="font-bold tracking-wider">

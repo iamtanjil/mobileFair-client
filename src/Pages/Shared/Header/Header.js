@@ -1,12 +1,46 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assest/logo.png';
 
 const Header = () => {
+
+    const activeStyle = {
+        backgroundColor: 'rgb(234 88 12)',
+        color: 'white'
+    }
+
     const navItems = <>
-        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '><Link to='/'>Home</Link></li>
-        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md'><Link to='/'>About</Link></li>
-        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md'><Link to='/'>Blog</Link></li>
+        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+            <NavLink
+                to='/'
+                className={({ isActive }) =>
+                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                }
+            >
+                Home
+            </NavLink>
+        </li>
+        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+            <NavLink
+                to='/about'
+                className={({ isActive }) =>
+                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                }
+            >
+                About
+            </NavLink>
+        </li>
+        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+            <NavLink
+                to='/blog'
+                className={({ isActive }) =>
+                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                }
+            >
+                Blog
+            </NavLink>
+        </li>
+        
     </>
     return (
         <div className="navbar bg-base-100 shadow-lg mb-5 rounded-b-md">

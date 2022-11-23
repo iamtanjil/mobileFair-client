@@ -1,5 +1,5 @@
 import React from 'react';
-import image from '../../../assest/ecommerce-1706103_1280.png';
+import image from '../../../assest/ecommerce-1706103_1280 .jpg';
 
 const HomeDescripton = () => {
     return (
