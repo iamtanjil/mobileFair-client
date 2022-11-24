@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assest/logo.png';
+import { AuthProvider } from '../../../Contexts/AuthContext';
 
 const Header = () => {
-
-    const activeStyle = {
-        backgroundColor: 'rgb(234 88 12)',
-        color: 'white'
-    }
+    const { user, logOut } = useContext(AuthProvider)
 
     const navItems = <>
         <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
@@ -40,7 +37,21 @@ const Header = () => {
                 Blog
             </NavLink>
         </li>
-        
+        {
+            user && <>
+                <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+                    <NavLink
+                        to='/dashboard'
+                        className={({ isActive }) =>
+                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                        }
+                    >
+                        Dashboard
+                    </NavLink>
+                </li>
+            </>
+        }
+
     </>
     return (
         <div className="navbar bg-base-100 shadow-lg mb-5 rounded-b-md">
@@ -68,7 +79,10 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link className="btn bg-orange-600 text-white hover:bg-orange-700 border-none">Login</Link>
+                {
+                    user ? <button onClick={logOut} className="btn bg-orange-600 text-white hover:bg-orange-700 border-none">LogOout</button> :
+                        <Link to='/login' className="btn bg-orange-600 text-white hover:bg-orange-700 border-none">Login</Link>
+                }
             </div>
         </div>
     );
