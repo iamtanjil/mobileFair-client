@@ -8,7 +8,7 @@ import useToken from '../../Hooks/UseToken/useToken';
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { createUser, updateUser } = useContext(AuthProvider);
     const [createdUserEmail, setCreatedUserEmail] = useState('');
 
@@ -55,8 +55,9 @@ const SignUp = () => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.acknowledged) {
-                        setCreatedUserEmail(email)
-                        toast.success('SignUp Successful.')
+                        setCreatedUserEmail(email);
+                        toast.success('SignUp Successful.');
+                        reset();
                     }
                 })
         }
