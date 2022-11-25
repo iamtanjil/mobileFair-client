@@ -2,10 +2,15 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthProvider } from '../../../Contexts/AuthContext';
 import toast from 'react-hot-toast';
+import Spinner from '../../../Components/Spinner/Spinner';
 
 const AddProducts = () => {
     const { register, handleSubmit, reset } = useForm();
-    const {user} = useContext(AuthProvider)
+    const {user,loading, setLoading} = useContext(AuthProvider)
+
+    if(loading){
+        return <Spinner></Spinner>
+    }
 
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
 
@@ -14,6 +19,7 @@ const AddProducts = () => {
     const time = date.getHours() + ':' + date.getMinutes();
 
     const handelAddProduct = data => {
+        setLoading(true);
         const image = data.productImage[0];
         const formData = new FormData();
         formData.append('image', image)
@@ -65,6 +71,7 @@ const AddProducts = () => {
             if(data.acknowledged){
                 toast.success('Product Successfully Added');
                 reset();
+                setLoading(false);
             }
         })
     }
@@ -161,7 +168,7 @@ const AddProducts = () => {
                                 {
                                     required: "Mobile Number is Required",
                                 })}
-                                type="text" name='mobileNumber' placeholder="Time"
+                                type="text" name='mobileNumber' placeholder="Mobile Number"
                                 className="input input-bordered w-full" 
                                 />
                         </div>
