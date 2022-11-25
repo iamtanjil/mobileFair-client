@@ -2,22 +2,33 @@ import React, { useContext, useState } from 'react';
 import loginImg from '../../assest/login.png';
 import { useForm } from 'react-hook-form';
 import { FaGoogle } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../../Contexts/AuthContext';
+import useToken from '../../Hooks/UseToken/useToken';
 
 const Login = () => {
-    const {signIn} = useContext(AuthProvider);
+    const { signIn } = useContext(AuthProvider);
     const [loginError, setLoginError] = useState('');
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [loggedUserEmail, setLoggedUserEmail] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [token] = useToken(loggedUserEmail);
+    const from = location.state?.from?.pathname || '/';
+
+    if (token) {
+        navigate(from, { replace: true });
+    }
 
     const handelLogin = data => {
         setLoginError('')
         signIn(data.email, data.password)
-        .then(result => {
-        })
-        .catch(err => {
-            setLoginError(err.message)
-        })
+            .then(result => {
+                setLoggedUserEmail(data.email)
+            })
+            .catch(err => {
+                setLoginError(err.message)
+            })
 
     }
 
@@ -67,8 +78,8 @@ const Login = () => {
                         <div>
                             {loginError && <p className='text-red-600'>{loginError}</p>}
                         </div>
-                    <div className="divider">OR</div>
-                    <button className='btn bg-orange-600 text-white hover:bg-orange-700 border-none mb-3'><FaGoogle className='text-white text-4xl'></FaGoogle></button>
+                        <div className="divider">OR</div>
+                        <button className='btn bg-orange-600 text-white hover:bg-orange-700 border-none mb-3'><FaGoogle className='text-white text-4xl'></FaGoogle></button>
                     </form>
                 </div>
             </div>

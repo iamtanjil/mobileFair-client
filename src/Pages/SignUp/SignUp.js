@@ -1,12 +1,21 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import loginImg from '../../assest/login.png';
 import { AuthProvider } from '../../Contexts/AuthContext';
+import toast from 'react-hot-toast';
+import useToken from '../../Hooks/UseToken/useToken';
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUser } = useContext(AuthProvider);
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+
+    const [token] = useToken(createdUserEmail)
+    if (token) {
+        navigate('/')
+    }
 
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
 
@@ -19,21 +28,38 @@ const SignUp = () => {
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(imgData => {
-            console.log(imgData)
-        })
-        formData.append('image', image);
-        createUser(data.email, data.password)
-        .then(result => {
-            const userInfo = {
-                displayName: data.name
-            };
-            updateUser(userInfo)
-            .then(()=> {
+            .then(res => res.json())
+            .then(imgData => {
+                createUser(data.email, data.password)
+                    .then(result => {
+                        const userInfo = {
+                            displayName: data.name
+                        };
+                        updateUser(userInfo)
+                            .then(() => {
+                                addDataToDB(data.email, data.name, imgData.data.url)
+                            })
+                    })
             })
-        })
 
+
+        const addDataToDB = (email, name, img) => {
+            const user = { email, name, img }
+            fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.acknowledged) {
+                        setCreatedUserEmail(email)
+                        toast.success('SignUp Successful.')
+                    }
+                })
+        }
     };
 
     return (
@@ -85,16 +111,16 @@ const SignUp = () => {
                             {errors.password && <p className='text-red-600 '>{errors.password?.message}</p>}
                         </div>
                         <div className="form-control w-full">
-                        <label className="label">
-                            <span className="text-lg">Upload Your Photo</span>
-                        </label>
-                        <input {...register("image",
-                            {
-                                required: 'Upload Photo'
-                            })}
-                            type="file" name='image'
-                            className="file-input file-input-bordered file-input-warning w-full" />
-                    </div>
+                            <label className="label">
+                                <span className="text-lg">Upload Your Photo</span>
+                            </label>
+                            <input {...register("image",
+                                {
+                                    required: 'Upload Photo'
+                                })}
+                                type="file" name='image'
+                                className="file-input file-input-bordered file-input-warning w-full" />
+                        </div>
                         <input className='btn bg-orange-600 text-white hover:bg-orange-700 border-none mt-5 mb-3' value='Sign Up' type="submit" />
                         <p className='text-lg text-center mb-5'>Already Have An Account? <Link to='/login' className='text-orange-600'>Login</Link> now.</p>
                     </form>
