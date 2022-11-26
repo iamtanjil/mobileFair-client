@@ -25,7 +25,7 @@ const RecentProduct = () => {
                                 <p className='text-xl'><strong>Price {product.productPrice}</strong> Taka</p>
                                 <p className='text-lg'>Location: {product.location}</p>
                                 <div className="card-actions">
-                                    <button className="btn bg-orange-600 text-white hover:bg-orange-700 border-none mt-5 mb-3">Book Now</button>
+                                    <label htmlFor='booking-modal' className="btn bg-orange-600 text-white hover:bg-orange-700 border-none mt-5 mb-3">Book Now</label>
                                 </div>
                             </div>
                         </div>
