@@ -13,14 +13,13 @@ const Category = () => {
             return data;
         }
     });
-    console.log(categorys);
     return (
         <div className='mt-20'>
             <h2 className='text-5xl text-center'>View Product by Category</h2>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
                 {
-                    categorys.map(category =>
-                        <div className="card w-full bg-base-100 shadow-xl image-full mt-12">
+                    categorys.map((category, i) =>
+                        <div key={i} className="card w-full bg-base-100 shadow-xl image-full mt-12">
                             <figure><img src={category.img} alt="Shoes" /></figure>
                             <div className="card-body">
                                 <div className='w-full flex flex-col items-center justify-center mt-10'>

@@ -56,6 +56,16 @@ const DashboardLayout = () => {
                                My Products
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                to='/dashboard/feedback'
+                                className={({ isActive }) =>
+                                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                }
+                            >
+                               Feedback
+                            </NavLink>
+                        </li>
                         
                     </ul>
 
