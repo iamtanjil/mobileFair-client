@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import BookingModal from '../../Products/BookingModal';
 
 const RecentProduct = () => {
+    const [booking, setBooking] = useState(null);
     const { data: products = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
@@ -25,11 +27,17 @@ const RecentProduct = () => {
                                 <p className='text-xl'><strong>Price {product.productPrice}</strong> Taka</p>
                                 <p className='text-lg'>Location: {product.location}</p>
                                 <div className="card-actions">
-                                    <label htmlFor='booking-modal' className="btn bg-orange-600 text-white hover:bg-orange-700 border-none mt-5 mb-3">Book Now</label>
+                                    <label onClick={() => setBooking(product)} htmlFor='booking-modal' className="btn bg-orange-600 text-white hover:bg-orange-700 border-none mt-5 mb-3">Book Now</label>
                                 </div>
                             </div>
                         </div>
                     )
+                }
+                {booking &&
+                    <BookingModal
+                    booking={booking}
+                    setBooking={setBooking}
+                    ></BookingModal>
                 }
             </div>
         </div>

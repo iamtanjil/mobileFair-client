@@ -23,7 +23,7 @@ const DashboardLayout = () => {
                                     isActive ? 'bg-orange-600 text-white rounded-md' : undefined
                                 }
                             >
-                                My Orders
+                                Manage Orders
                             </NavLink>
                         </li>
                         <li>
@@ -44,6 +44,16 @@ const DashboardLayout = () => {
                                 }
                             >
                                Add Products
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/dashboard/myproducts'
+                                className={({ isActive }) =>
+                                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                }
+                            >
+                               My Products
                             </NavLink>
                         </li>
                         

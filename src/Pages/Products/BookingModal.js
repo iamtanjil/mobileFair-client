@@ -1,13 +1,52 @@
 import React, { useContext } from 'react';
 import { AuthProvider } from '../../Contexts/AuthContext';
+import toast from 'react-hot-toast';
 
-const BookingModal = ({booking}) => {
+const BookingModal = ({booking, setBooking}) => {
 
     const {user}=useContext(AuthProvider);
 
-    const handleOnSubmit = () => {
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const location = form.location.value;
+        const mobileNumber = form.phone.value;
+        const offeringPrice = form.offeringPrice.value;
 
+        const bookings = {
+            productId: booking._id,
+            buyerName: user.displayName,
+            buyerEmail: user.email,
+            location,
+            mobileNumber,
+            offeringPrice,
+            productName: booking.productName,
+            productImage: booking.productImage,
+            sellerEmail: booking.sellerEmail,
+        }
+        savetoDB(bookings);
     };
+
+    const savetoDB = data => {
+        fetch('http://localhost:5000/bookings', {
+            method:'POST',
+            headers:{
+                'content-type':'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=>res.json())
+        .then(data => {
+            if(data.acknowledged){
+                toast.success('Order Successfully Placed');
+                setBooking(null);
+            }
+            else{
+                toast.error(data.message)
+            }
+        })
+    }
     return (
         <>
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
