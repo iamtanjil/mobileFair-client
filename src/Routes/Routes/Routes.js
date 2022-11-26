@@ -7,6 +7,7 @@ import AllUser from "../../Pages/Dashboard/AllUser/AllUser";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import Products from "../../Pages/Products/Products";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         {
             path:'/signup',
             element: <SignUp></SignUp>
+        },
+        {
+            path:'/products/:category',
+            element: <PrivateRoute><Products></Products></PrivateRoute>,
+            loader: ({params}) => fetch(`http://localhost:5000/products/${params.category}`)
         },
     ]
 },

@@ -11,9 +11,9 @@ const RecentProduct = () => {
         }
     });
     return (
-        <div className='mt-12'>
+        <div className='mt-20'>
             <h2 className="text-5xl text-center">Recently Added</h2>
-            <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-4 gap-4 mt-12'>
                 {
                     products.map(product =>
                         <div key={product._id} className="card w-full h-[450px] bg-base-100 shadow-xl">
