@@ -15,7 +15,7 @@ const Orders = () => {
     });
     return (
         <div className='p-7'>
-            <div className="overflow-x-auto w-full">
+            <div className="overflow-x-auto w-full mt-5">
                 <table className="table w-full">
                     <thead>
                         <tr>

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import ConfirmationModal from '../../../Components/ConfirmationModal/ConfirmationModal';
 
 const AllUser = () => {
+    const [deletingUser, setDeleteingUser] = useState(null);
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
@@ -12,6 +14,9 @@ const AllUser = () => {
             return data;
         }
     });
+    const closeModal = () => {
+        setDeleteingUser(null);
+    }
 
     const handleMakeAdmin = (id) => {
         const url = `http://localhost:5000/users/${id}`;
@@ -50,6 +55,24 @@ const AllUser = () => {
                 }
             });
     };
+
+    const handelDeleteUser = user => {
+        console.log(user);
+        fetch(`http://localhost:5000/manageuser/${user._id}`,{
+            method: 'DELETE',
+            headers:{
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.deletedCount > 0){
+                refetch();
+                toast.success(`${user.name} Deleted Successfully`)
+            }
+        })
+    };
+
     return (
         <div className='p-7'>
             <h2 className='text-3xl font-medium mb-5'>Total User: {users.length}</h2>
@@ -63,6 +86,7 @@ const AllUser = () => {
                             <th>Email</th>
                             <th>Admin</th>
                             <th>Seller</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,14 +112,28 @@ const AllUser = () => {
                                     <td>
                                         {
                                             user?.role === 'seller' ? <button className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-32'>Already Seller</button> :
-                                            <button onClick={() => handleMakeSeller(user._id)} className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-24'>Make Seller</button>
+                                                <button onClick={() => handleMakeSeller(user._id)} className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-24'>Make Seller</button>
                                         }
+                                    </td>
+                                    <td>
+                                        <label htmlFor="confirmation-modal" onClick={() => setDeleteingUser(user)} className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-24'>Delete User</label>
                                     </td>
                                 </tr>
                             )
                         }
                     </tbody>
                 </table>
+            {
+                deletingUser &&
+                <ConfirmationModal
+                    title={'Are You Sure to Delete?'}
+                    message={`Are you sure to delete ${deletingUser.name}?`}
+                    closeModal={closeModal}
+                    modalData={deletingUser}
+                    buttonName='Okey! Procced'
+                    successAction={handelDeleteUser}
+                ></ConfirmationModal>
+            }
             </div>
         </div>
     );

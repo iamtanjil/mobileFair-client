@@ -44,7 +44,7 @@ const SignUp = () => {
 
 
         const addDataToDB = (email, name, img) => {
-            const user = { email, name, img }
+            const user = { email, name, img , role: 'user'}
             fetch('http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
