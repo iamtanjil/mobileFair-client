@@ -76,6 +76,16 @@ const DashboardLayout = () => {
                                Orders
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                to='/dashboard/sellers'
+                                className={({ isActive }) =>
+                                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                }
+                            >
+                               All Seller
+                            </NavLink>
+                        </li>
                         
                     </ul>
 
