@@ -31,6 +31,25 @@ const AllUser = () => {
                 }
             });
     };
+
+    const handleMakeSeller = (id) => {
+        const url = `http://localhost:5000/seller/${id}`;
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success('Seller Successfully Added');
+                    refetch();
+                }
+            });
+    };
     return (
         <div className='p-7'>
             <h2 className='text-3xl font-medium mb-5'>Total User: {users.length}</h2>
@@ -62,11 +81,16 @@ const AllUser = () => {
                                     <td>{user.email}</td>
                                     <td>
                                         {
-                                            user?.role ? <button className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-32'>Already Admin</button> :
+                                            user?.role === 'admin' ? <button className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-32'>Already Admin</button> :
                                                 <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none mb-3 w-24 '>Make Admin</button>
-                                        }                                        
+                                        }
                                     </td>
-                                    <td><button className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-24'>Make Seller</button></td>
+                                    <td>
+                                        {
+                                            user?.role === 'seller' ? <button className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-32'>Already Seller</button> :
+                                            <button onClick={() => handleMakeSeller(user._id)} className='btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none w-24'>Make Seller</button>
+                                        }
+                                    </td>
                                 </tr>
                             )
                         }

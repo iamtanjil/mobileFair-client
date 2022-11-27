@@ -16,7 +16,7 @@ const MyOrders = () => {
     return (
         <div className='p-7'>
             <h2 className='text-3xl'>Total Orders: {bookings.length}</h2>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto mt-5">
                 <table className="table table-compact w-full">
                     <thead>
                         <tr>

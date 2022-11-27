@@ -7,10 +7,12 @@ import AllUser from "../../Pages/Dashboard/AllUser/AllUser";
 import Feedback from "../../Pages/Dashboard/Feedback/Feedback";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../../Pages/Dashboard/MyProducts.js/MyProduct";
+import Orders from "../../Pages/Dashboard/Orders/Orders";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products";
 import SignUp from "../../Pages/SignUp/SignUp";
+import AdminRoutes from "../AdminRoutes/AdminRoutes";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
@@ -47,7 +49,7 @@ const router = createBrowserRouter([
     children: [
         {
             path:'/dashboard/alluser',
-            element: <PrivateRoute><AllUser></AllUser></PrivateRoute>,
+            element: <PrivateRoute><AdminRoutes><AllUser></AllUser></AdminRoutes></PrivateRoute>,
         },
         {
             path:'/dashboard/myorders',
@@ -64,6 +66,10 @@ const router = createBrowserRouter([
         {
             path:'/dashboard/feedback',
             element: <PrivateRoute><Feedback></Feedback></PrivateRoute>
+        },
+        {
+            path:'/dashboard/orders',
+            element: <PrivateRoute><Orders></Orders></PrivateRoute>
         },
     ]
 }
