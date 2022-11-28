@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const OrdersData = ({order}) => {
+const OrdersData = ({ order }) => {
     return (
         <tr>
             <td>
@@ -16,11 +17,15 @@ const OrdersData = ({order}) => {
                 </div>
             </td>
             <td>
-               {order.offeringPrice}
+                {order.offeringPrice}
             </td>
             <td>{order.location}</td>
             <th>
-                <button className="btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none mt-3">Pay</button>
+                {
+                    order?.paid ?
+                        <button className='btn btn-sm bg-green-600 border-none text-white'>Paid</button> :
+                        <Link to={`/dashboard/payments/${order._id}`} className="btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none mt-3">Pay</Link>
+                }
             </th>
         </tr>
     );

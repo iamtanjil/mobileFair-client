@@ -9,6 +9,7 @@ import Feedback from "../../Pages/Dashboard/Feedback/Feedback";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../../Pages/Dashboard/MyProducts.js/MyProduct";
 import Orders from "../../Pages/Dashboard/Orders/Orders";
+import Payments from "../../Pages/Dashboard/Payments/Payments";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products";
@@ -75,6 +76,11 @@ const router = createBrowserRouter([
         {
             path:'/dashboard/orders',
             element: <PrivateRoute><Orders></Orders></PrivateRoute>
+        },
+        {
+            path:'/dashboard/payments/:id',
+            element: <PrivateRoute><Payments></Payments></PrivateRoute>,
+            loader: ({params}) =>  fetch(`http://localhost:5000/payments/${params.id}`)
         },
     ]
 }

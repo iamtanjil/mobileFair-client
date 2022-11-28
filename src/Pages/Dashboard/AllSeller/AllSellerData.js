@@ -1,6 +1,24 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 
-const AllSellerData = ({seller}) => {
+const AllSellerData = ({ seller, refetch }) => {
+
+    const handleSellerVerification = id => {
+        fetch(`http://localhost:5000/seller/verification/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success('Seller Successfully Verified');
+                    refetch();
+                }
+            })
+    };
     return (
         <tr>
             <td>
@@ -19,7 +37,10 @@ const AllSellerData = ({seller}) => {
                 {seller.email}
             </td>
             <th>
-                <button className="btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none mt-3">Verify</button>
+                {
+                    seller?.verifiedSeller === 'yes' ? <button className='btn btn-sm bg-green-600 text-white border-none mt-3'>Verified</button> :
+                        <button onClick={() => handleSellerVerification(seller._id)} className="btn btn-sm bg-orange-600 text-white hover:bg-orange-700 border-none mt-3">Verify</button>
+                }
             </th>
         </tr>
     );
