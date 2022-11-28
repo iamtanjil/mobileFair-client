@@ -6,13 +6,13 @@ const ProductsCard = ({ product, setBooking }) => {
     const [isVerified] = useVerified(product?.sellerEmail);
 
     const handleWishlist = id => {
-        fetch(`http://localhost:5000/wishlists/${id}`)
+        fetch(`https://assignment-12-server-mu.vercel.app/wishlists/${id}`)
         .then(res => res.json())
         .then(data => addToDb(data))
     }
 
     const addToDb = (data) => {
-        fetch('http://localhost:5000/wishlists', {
+        fetch('https://assignment-12-server-mu.vercel.app/wishlists', {
             method: 'POST',
             headers:{
                 'content-type': 'application/json',

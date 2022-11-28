@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 const AllSellerData = ({ seller, refetch }) => {
 
     const handleSellerVerification = id => {
-        fetch(`http://localhost:5000/seller/verification/${id}`, {
+        fetch(`https://assignment-12-server-mu.vercel.app/seller/verification/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

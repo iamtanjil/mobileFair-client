@@ -8,7 +8,7 @@ const Wishlist = () => {
     const { data: products = [] } = useQuery({
         queryKey: ['productsss'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/dashboard/wishlist?email=${user.email}`)
+            const res = await fetch(`https://assignment-12-server-mu.vercel.app/dashboard/wishlist?email=${user.email}`)
             const data = await res.json();
             return data;
         }

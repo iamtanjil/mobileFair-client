@@ -58,7 +58,7 @@ const AddProducts = () => {
     }
 
     const saveToDb = data => {
-        fetch('http://localhost:5000/products', {
+        fetch('https://assignment-12-server-mu.vercel.app/products', {
             method:'POST',
             headers: {
                 'content-type': 'application/json',

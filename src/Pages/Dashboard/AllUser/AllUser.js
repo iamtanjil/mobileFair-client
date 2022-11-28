@@ -9,7 +9,7 @@ const AllUser = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users')
+            const res = await fetch('https://assignment-12-server-mu.vercel.app/users')
             const data = await res.json();
             return data;
         }
@@ -19,7 +19,7 @@ const AllUser = () => {
     }
 
     const handleMakeAdmin = (id) => {
-        const url = `http://localhost:5000/users/${id}`;
+        const url = `https://assignment-12-server-mu.vercel.app/users/${id}`;
 
         fetch(url, {
             method: 'PUT',
@@ -38,7 +38,7 @@ const AllUser = () => {
     };
 
     const handleMakeSeller = (id) => {
-        const url = `http://localhost:5000/seller/${id}`;
+        const url = `https://assignment-12-server-mu.vercel.app/seller/${id}`;
 
         fetch(url, {
             method: 'PUT',
@@ -58,7 +58,7 @@ const AllUser = () => {
 
     const handelDeleteUser = user => {
         console.log(user);
-        fetch(`http://localhost:5000/manageuser/${user._id}`,{
+        fetch(`https://assignment-12-server-mu.vercel.app/manageuser/${user._id}`,{
             method: 'DELETE',
             headers:{
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

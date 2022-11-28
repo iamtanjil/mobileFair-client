@@ -7,7 +7,7 @@ const RecentProduct = () => {
     const { data: products = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/recentlyadded')
+            const res = await fetch('https://assignment-12-server-mu.vercel.app/recentlyadded')
             const data = await res.json();
             return data;
         }

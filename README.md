@@ -6,4 +6,4 @@
 
 adminEmail: <admin@gmail.com>
 
-adminPassword: <Tanjil3110@>
+adminPassword: Tanjil3110@

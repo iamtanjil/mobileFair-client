@@ -5,7 +5,7 @@ const Feedback = () => {
     const { data: feedback = [] } = useQuery({
         queryKey: ['feedback'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/feedback')
+            const res = await fetch('https://assignment-12-server-mu.vercel.app/feedback')
             const data = await res.json();
             return data;
         }
