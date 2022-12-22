@@ -2,10 +2,15 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assest/logo.png';
 import { AuthProvider } from '../../../Contexts/AuthContext';
+import useAdmin from '../../../Hooks/UseAdmin/UseAdmin';
+import useSeller from '../../../Hooks/UseSeller/UseSeller';
+import useUser from '../../../Hooks/UseUsers/useUsers';
 
 const Header = () => {
     const { user, logOut } = useContext(AuthProvider)
-
+    const [isAdmin] = useAdmin(user?.email);
+    const [isSeller] = useSeller(user?.email);
+    const [isUser] = useUser(user?.email);
     const navItems = <>
         <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
             <NavLink
@@ -53,6 +58,167 @@ const Header = () => {
         }
 
     </>
+    const navItemsMobile = <>
+        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+            <NavLink
+                to='/'
+                className={({ isActive }) =>
+                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                }
+            >
+                Home
+            </NavLink>
+        </li>
+        <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+            <NavLink
+                to='/blog'
+                className={({ isActive }) =>
+                    isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                }
+            >
+                Blog
+            </NavLink>
+        </li>
+        {
+            user && <>
+                <li className=' hover:bg-orange-600 hover:text-white hover:rounded-md '>
+                    <NavLink
+                        to='/dashboard'
+                        className={({ isActive }) =>
+                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                        }
+                    >
+                        Dashboard
+                    </NavLink>
+                </li>
+                {
+                            isAdmin &&
+                            <>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/myorders'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Manage Orders
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/alluser'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        All User
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/addproducts'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Add Products
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/myproducts'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        My Products
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/feedback'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Feedback
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/orders'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Orders
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/sellers'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        All Seller
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
+                        {
+                            isSeller &&
+                            <>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/myorders'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Manage Orders
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/myproducts'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        My Products
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/addproducts'
+                                        className={({ isActive }) =>
+                                            isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                        }
+                                    >
+                                        Add Products
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
+                        {
+                            isUser &&
+                            <li>
+                                <NavLink
+                                    to='/dashboard/orders'
+                                    className={({ isActive }) =>
+                                        isActive ? 'bg-orange-600 text-white rounded-md' : undefined
+                                    }
+                                >
+                                    Orders
+                                </NavLink>
+                            </li>
+                        }
+
+            </>
+        }
+
+    </>
     return (
         <div className="navbar bg-base-100 shadow-lg mb-5 rounded-b-md">
             <div className="navbar-start">
@@ -62,7 +228,7 @@ const Header = () => {
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         {
-                            navItems
+                            navItemsMobile
                         }
                     </ul>
                 </div>

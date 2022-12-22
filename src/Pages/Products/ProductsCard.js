@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 const ProductsCard = ({ product, setBooking }) => {
     const [isVerified] = useVerified(product?.sellerEmail);
+    console.log(isVerified);
 
     const handleWishlist = id => {
         fetch(`https://assignment-12-server-mu.vercel.app/wishlists/${id}`)
